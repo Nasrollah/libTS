@@ -1,3 +1,6 @@
+BUILDING libTS
+=====
+
 To Build:
 --------
 Let BUILD be the directory and SRC be the source directory.
@@ -20,11 +23,11 @@ cmake -DCOMPILER_FAMILY=<gnu,intel,portland> -DINSTALL_DIR=<installation_directo
 make -j4
 make install 
 
-Here is the example I used from my bash_history
+Here is the example I used from my cshrc_history
  2225  mkdir BUILD
  2226  cd BUILD/
  2227  export CC=mpicc;export CXX=mpicxx;export FC=mpif90;
- 2228  cmake -DCOMPILER_FAMILY=gnu -DINSTALL_DIR=/home/jay/code/cart /home/jay/cart
+ 2228  cmake -DCMAKE_Fortran_COMPILER=/glade/apps/opt/modulefiles/ys/cmpwrappers/mpif90 -DCOMPILER_FAMILY=intel /glade/u/home/jleffell/devel/repos/libTS
  2229  make -j4
  2230  make install
 
