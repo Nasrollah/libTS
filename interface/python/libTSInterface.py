@@ -23,7 +23,7 @@ class libTSModule:
 	self.modulename='libTS'
 
     def af_update(self):
-        libTS.afts_update(self.qlocal,self.slocal,self.vollocal,
+        self.libTS.afts_update(self.qlocal,self.slocal,self.vollocal,
                           self.myidlocal,self.ninstanceslocal,
                           self.hlocal,self.freqlocal,
                           self.tcomplocal,self.tcommlocal)
@@ -41,5 +41,6 @@ class libTSModule:
         self.freqlocal=data['freq-data']
         self.tcomplocal=data['tcomp_ts-data']
         self.tcommlocal=data['tcomm_ts-data']
+
     def finish(self):
 	libTS.ts_cleanup()
