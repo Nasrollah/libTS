@@ -1,5 +1,5 @@
 #
-# Contains a CMakeLists.txt file that should work for standalone CART.
+# Contains a CMakeLists.txt file that should work for standalone libTS.
 # Jay Sitaraman 11/22/2014
 #
 PROJECT(LIBTS)

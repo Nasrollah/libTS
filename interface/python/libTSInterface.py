@@ -23,7 +23,7 @@ class libTSModule:
 	self.modulename='libTS'
 
     def af_update(self):
-        self.libTS.afts_update(self.qlocal,self.slocal,self.vollocal,
+        libTS.afts_update(self.qlocal,self.slocal,self.vollocal,
                           self.myidlocal,self.ninstanceslocal,
                           self.hlocal,self.freqlocal,
                           self.tcomplocal,self.tcommlocal)

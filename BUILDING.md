@@ -16,20 +16,31 @@ set(PYTHON_INCLUDE /usr/local/include/python2.7 )
 
 Then do following commands:
 
-mkdir BUILD;
-export CC=mpicc;export CXX=mpicxx;export FC=mpif90 (or equivalent in other shells)
-cd BUILD;
-cmake -DCOMPILER_FAMILY=<gnu,intel,portland> -DINSTALL_DIR=<installation_directory> SRC
-make -j4
-make install 
+For BASH:	  
+  
+  mkdir BUILD
+  export CC=mpicc;export CXX=mpicxx;export FC=mpif90 (or equivalent in other shells)
+  cd BUILD
+  cmake -DCOMPILER_FAMILY=<gnu,intel,portland> -DINSTALL_DIR=<installation_directory> SRC
+  make -j4
+  make install 
 
-Here is the example I used from my cshrc_history
- 2225  mkdir BUILD
- 2226  cd BUILD/
- 2227  export CC=mpicc;export CXX=mpicxx;export FC=mpif90;
- 2228  cmake -DCMAKE_Fortran_COMPILER=/glade/apps/opt/modulefiles/ys/cmpwrappers/mpif90 -DCOMPILER_FAMILY=intel /glade/u/home/jleffell/devel/repos/libTS
- 2229  make -j4
- 2230  make install
+For CSH:
+
+  mkdir BUILD
+  setenv CC=mpicc;setenv CXX=mpicxx;setenv FC=mpif90 
+  cd BUILD
+  cmake -DCOMPILER_FAMILY=<gnu,intel,portland> -DINSTALL_DIR=<installation_directory> SRC
+  make -j4
+  make install
+
+Here is the example I used from my csh_history
+     2225  mkdir BUILD
+     2226  cd BUILD/
+     2227  setenv CC=mpicc;setenv CXX=mpicxx;setenv FC=mpif90;
+     2228  cmake -DCOMPILER_FAMILY=intel ..
+     2229  make -j4
+     2230  make install
 
 Note:
 If COMPILER_FAMILY is not specified it is assumed as "gnu"
