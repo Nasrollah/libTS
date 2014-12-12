@@ -57,6 +57,8 @@ ADD_SUBDIRECTORY(interface)
 # install all the required files in 
 # the installation directory
 #
+INSTALL(FILES ${LIBTS_SOURCE}/README.md
+  DESTINATION ${INSTALL_DIR}/README)
 INSTALL(FILES ${LIBTS_SOURCE}/interface/python/libTSInterface.py 
   DESTINATION ${INSTALL_DIR}/bin)
 INSTALL(FILES ${LIBTS_BUILD}/python/libTS.so 
