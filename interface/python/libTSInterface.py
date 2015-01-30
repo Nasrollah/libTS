@@ -24,9 +24,10 @@ class libTSModule:
 
     def af_update(self):
         libTS.afts_update(self.qlocal,self.slocal,self.vollocal,
-                          self.myidlocal,self.ninstanceslocal,
+                          self.timeranklocal,self.ninstanceslocal,
                           self.hlocal,self.freqlocal,
-                          self.tcomplocal,self.tcommlocal)
+                          self.tcomplocal,self.tcommlocal,
+                          self.timecommlocal)
 
     def setData(self,data):
         self.qlocal=data['q-data']
@@ -41,6 +42,7 @@ class libTSModule:
         self.freqlocal=data['freq-data']
         self.tcomplocal=data['tcomp_ts-data']
         self.tcommlocal=data['tcomm_ts-data']
-
+        self.timecommlocal=data['timecomm-data']
+        self.timeranklocal=data['timerank-data']
     def finish(self):
 	libTS.ts_cleanup()

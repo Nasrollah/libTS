@@ -10,7 +10,7 @@ module temp_arrays
  complex*16, allocatable :: dft_snd(:,:,:,:,:),dft_rcv(:,:,:,:,:)
 end module temp_arrays
 ! 
-subroutine afts(q,rhs,vol,rank,n,h,w0,tcomp,tcomm,jmax,kmax,lmax)
+subroutine afts(q,rhs,vol,rank,n,h,w0,tcomp,tcomm,jmax,kmax,lmax,timeComm)
 !
 use temp_arrays
 !
@@ -25,6 +25,7 @@ integer, intent(in)   :: rank
 integer, intent(in)   :: n
 real*8, intent(in)    :: h
 real*8, intent(inout) :: tcomp,tcomm
+integer, intent(in)   :: timeComm
 !
 integer   :: i,j,k,l,c,iq,n1
 real*8    :: pi,w,t_start,t_end
@@ -63,24 +64,11 @@ do i=1,n
    tcomp = tcomp + t_end - t_start
 
    call cpu_time(t_start)
-   call mpi_reduce(qctmp1,qctmp2,npts,MPI_DOUBLE_COMPLEX,MPI_SUM,i-1,mpi_comm_world,ierr)
-   call mpi_reduce(rctmp1,rctmp2,npts,MPI_DOUBLE_COMPLEX,MPI_SUM,i-1,mpi_comm_world,ierr)
+   call mpi_reduce(qctmp1,qctmp2,npts,MPI_DOUBLE_COMPLEX,MPI_SUM,i-1,timeComm,ierr)
+   call mpi_reduce(rctmp1,rctmp2,npts,MPI_DOUBLE_COMPLEX,MPI_SUM,i-1,timeComm,ierr)
    call cpu_time(t_end)
    tcomm = tcomm + t_end - t_start
 enddo
-
-! Apply Parallel DFT to rhs
-!do i=1,n
-!   call cpu_time(t_start)
-!   rctmp1=pij(i)*dcmplx(rhs)
-!   call cpu_time(t_end)
-!   tcomp = tcomp + t_end - t_start
-   
-!   call cpu_time(t_start)
-!   call mpi_reduce(rctmp1,rctmp2,npts,MPI_DOUBLE_COMPLEX,MPI_SUM,i-1,mpi_comm_world,ierr)
-!   call cpu_time(t_end)
-!   tcomm = tcomm + t_end - t_start
-!enddo
 
 ! Compute implict update in transformed space via scalar division
 ikk = dcmplx(real(kk(rank+1)))
@@ -116,7 +104,7 @@ do i=1,n
    tcomp = tcomp + t_end - t_start
 
    call cpu_time(t_start)
-   call mpi_reduce(rctmp1,rctmp2,npts,MPI_DOUBLE_COMPLEX,MPI_SUM,i-1,mpi_comm_world,ierr)
+   call mpi_reduce(rctmp1,rctmp2,npts,MPI_DOUBLE_COMPLEX,MPI_SUM,i-1,timeComm,ierr)
    call cpu_time(t_end)
    tcomm = tcomm + t_end - t_start
 enddo
@@ -131,7 +119,7 @@ enddo
 return
 end subroutine afts
 
-subroutine afts_double(q,rhs,vol,rank,n,h,w0,tcomp,tcomm,jmax,kmax,lmax)
+subroutine afts_double(q,rhs,vol,rank,n,h,w0,tcomp,tcomm,jmax,kmax,lmax,timeComm)
 !
 use temp_arrays
 !
@@ -146,6 +134,7 @@ integer, intent(in)   :: rank
 integer, intent(in)   :: n
 real*8, intent(in)    :: h
 real*8, intent(inout) :: tcomp,tcomm
+integer, intent(in) :: timeComm
 !
 integer   :: i,j,k,l,c,iq,n1
 real*8    :: pi,w,t_start,t_end
@@ -185,7 +174,7 @@ do i=1,n
    tcomp = tcomp + t_end - t_start
 
    call cpu_time(t_start)
-   call mpi_reduce(dft_snd,dft_rcv,2*npts,MPI_DOUBLE_COMPLEX,MPI_SUM,i-1,mpi_comm_world,ierr)
+   call mpi_reduce(dft_snd,dft_rcv,2*npts,MPI_DOUBLE_COMPLEX,MPI_SUM,i-1,timeComm,ierr)
    qctmp2 = dft_rcv(:,:,:,:,1)
    rctmp2 = dft_rcv(:,:,:,:,2)
    !call mpi_reduce(rctmp1,rctmp2,npts,MPI_DOUBLE_COMPLEX,MPI_SUM,i-1,mpi_comm_world,ierr)
@@ -227,7 +216,7 @@ do i=1,n
    tcomp = tcomp + t_end - t_start
 
    call cpu_time(t_start)
-   call mpi_reduce(qctmp1,qctmp2,npts,MPI_DOUBLE_COMPLEX,MPI_SUM,i-1,mpi_comm_world,ierr)
+   call mpi_reduce(qctmp1,qctmp2,npts,MPI_DOUBLE_COMPLEX,MPI_SUM,i-1,timeComm,ierr)
    call cpu_time(t_end)
    tcomm = tcomm + t_end - t_start
 enddo

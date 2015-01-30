@@ -1,7 +1,7 @@
 !!
 !> Perform Time-Spectral Approximate Factorization Update
 !!
-subroutine afts_update(q,rhs,vol,rank,ninstances,h,freq,tcomp_ts,tcomm_ts,jmax,kmax,lmax)
+subroutine afts_update(q,rhs,vol,rank,ninstances,h,freq,tcomp_ts,tcomm_ts,jmax,kmax,lmax,timeComm)
   implicit none
 !  include 'mpif.h'
  
@@ -13,12 +13,13 @@ subroutine afts_update(q,rhs,vol,rank,ninstances,h,freq,tcomp_ts,tcomm_ts,jmax,k
   integer, intent(in)   :: ninstances
   real*8, intent(in)    :: h
   real*8, intent(inout) :: tcomp_ts,tcomm_ts
+  integer, intent(in) :: timeComm
   ! 
   integer :: nq,ndof
 
   nq = 5 ! read this in later but harcoded for now
   ndof = nq*jmax*kmax*lmax
-  call afts(q,rhs,vol,rank,ninstances,h,freq,tcomp_ts,tcomm_ts,jmax,kmax,lmax)
+  call afts(q,rhs,vol,rank,ninstances,h,freq,tcomp_ts,tcomm_ts,jmax,kmax,lmax,timeComm)
   !call afts_buffer(q,rhs,vol,rank,ninstances,h,freq,tcomp_ts,tcomm_ts,jmax,kmax,lmax,ndof)
   !call afts_uns(q,rhs,vol,rank,ninstances,h,freq,npts)
   return
