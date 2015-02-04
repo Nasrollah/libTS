@@ -21,13 +21,21 @@ class libTSModule:
 
     def __init__(self):
 	self.modulename='libTS'
+        self.libTS=libTS.libtsinterface
+    
+    def initData(self,ninstances,topologySpaceTime):
+        self.libTS.libts_init_data(ninstances,topologySpaceTime)
+        self.cartcomm=self.libTS.cartcomm
+        self.timecomm=self.libTS.timecomm
+        self.myid_temporal=self.libTS.myid_temporal
 
-    def af_update(self):
-        libTS.afts_update(self.qlocal,self.slocal,self.vollocal,
-                          self.timeranklocal,self.ninstanceslocal,
+    def update(self):
+        self.libTS.afts_update(self.qlocal,self.slocal,self.vollocal,
+                          self.myidlocal,self.ninstanceslocal,
                           self.hlocal,self.freqlocal,
-                          self.tcomplocal,self.tcommlocal,
-                          self.timecommlocal)
+                          self.tcomplocal,self.tcommlocal)
+#,
+                         # self.timecommlocal)
 
     def setData(self,data):
         self.qlocal=data['q-data']
@@ -42,7 +50,7 @@ class libTSModule:
         self.freqlocal=data['freq-data']
         self.tcomplocal=data['tcomp_ts-data']
         self.tcommlocal=data['tcomm_ts-data']
-        self.timecommlocal=data['timecomm-data']
-        self.timeranklocal=data['timerank-data']
+      #  self.timecommlocal=data['timecomm-data']
+      #  self.timeranklocal=data['timerank-data']
     def finish(self):
-	libTS.ts_cleanup()
+	self.libTS.ts_cleanup()

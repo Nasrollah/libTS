@@ -17,6 +17,7 @@ INCLUDE("standalone.cmake")
 #
 INCLUDE("${CMAKE_CURRENT_SOURCE_DIR}/src/lhs/lhs.cmake")
 INCLUDE("${CMAKE_CURRENT_SOURCE_DIR}/src/math/math.cmake")
+INCLUDE("${CMAKE_CURRENT_SOURCE_DIR}/src/partition/partition.cmake")
 INCLUDE("${CMAKE_CURRENT_SOURCE_DIR}/interface/interface.cmake")
 #
 # Set the top level source directory for LIBTS.
@@ -41,7 +42,7 @@ INCLUDE_DIRECTORIES(BEFORE ${LIBTS_BUILD})
 # LIBTS source files without driver but 
 # includes interface
 #
-SET(LIBTS_SRCS ${LHSSRCS} ${MATHSRCS} ${INTERFACESRCS})
+SET(LIBTS_SRCS ${LHSSRCS} ${MATHSRCS} ${PARTITIONSRCS} ${INTERFACESRCS})
 #
 # Build the basic libTS.a one expects.
 #
